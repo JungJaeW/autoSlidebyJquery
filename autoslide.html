@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <link rel="stylesheet" href="./main.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <title>Document</title>
+</head>
+<body>
+  <div style="overflow: hidden">
+    <div class="slide-container">
+     
+      <div class="slide-box">
+        <img src="car1.png">
+      </div>
+      <div class="slide-box">
+        <img src="car2.png">
+      </div>
+      <div class="slide-box">
+        <img src="car3.png">
+      </div>
+    </div>
+ </div> 
+ <div class="sub-menu">
+  <button class="before"><span class="material-symbols-outlined">
+    navigate_before
+    </span></button>
+  <button class="toggle"><span id="symbol" class="material-symbols-outlined">
+    pause
+    </span></button>
+    <button class="next"><span class="material-symbols-outlined">
+      navigate_next
+      </span></button>
+      <div class="index"></div>
+</div>
+ <script>
+  let screen = 0;
+    let index = document.getElementsByClassName('slide-box').length;
+    let toggle = true;
+    console.log(index);
+    let loof = setInterval(function(){
+      document.getElementsByClassName('next')[0].click();
+    },3000);
+    $('.toggle').on('click',function(){
+      
+      if(toggle){
+        $('#symbol').html('play_arrow')
+        clearInterval(loof);
+        toggle = false;
+        
+      }else{
+        $('#symbol').html('pause')
+        loof = setInterval(function(){
+      document.getElementsByClassName('next')[0].click();
+    },3000);
+        toggle = true;
+      }
+    })
+    $('.next').on('click', function(){
+      
+      screen ++;
+      console.log(screen);
+      if(screen == index){
+        screen = 0;
+    }
+    $('.slide-container').css('transform', 'translateX(-' + screen + '00vw)');
+    $('.index span').css('opacity','1');
+    $('.index'+screen).css('opacity', '0.5');
+});
+
+  $('.before').on('click',function(){
+    if(screen ==0){
+      screen = index-1;
+      $('.slide-container').css('transform', 'translateX(-'+screen+'00vw)');
+    }else{
+      screen --;
+      $('.slide-container').css('transform', 'translateX(-' + screen + '00vw)');
+    }
+  });
+
+  for(let i = 0; i < index; i++){
+    $('.index').append("<span class=index"+i+">circle</span>");
+    $('.index').addClass('material-symbols-outlined');
+    $('.index'+i).on('click',function(){
+      $('.slide-container').css('transform', 'translateX(-' + i + '00vw)');
+      screen = i;
+      
+    })
+  }
+
+  function first (){
+    $('.index0').css('opacity','0.5');
+  }
+  first();
+ </script>
+</body>
+</html>
